@@ -1,0 +1,113 @@
+﻿@model RecursosHumanos.Models.EdicionSolicitud
+
+@{
+    ViewBag.Title = "EdicionSolicitud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section JavaScript{
+    <script type="text/javascript">
+        var requrlConsulta = '@Url.Action("ConsultaSolicitudRRHH", "ConsultaSolicitudRRHH", null, Request.Url.Scheme)';
+        var requrlConsultaT = '@Url.Action("ConsultaSolicitud", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlDatos = '@Url.Action("ActualizarDetalleDescansoFisico", "EdicionSolicitud", null, Request.Url.Scheme)';
+        var requrlValidaFechas = '@Url.Action("ValidarFechasSolicitudDescansoFisico", "EdicionSolicitud", null, Request.Url.Scheme)';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/view/EdicionSolicitud.js")"></script>
+}
+<section class="content-header">
+    <h1><em>Edición de Solicitud</em></h1>
+    <ol class="breadcrumb">
+        @Html.MvcSiteMap().SiteMapPath()
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <div data-spy="affix" data-offset-top="0" style="width:320px;">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Datos del Trabajador</h3>
+                        <div class="box-tools">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body with-border">
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sCodTrabajador, new { @class = "control-label small" })
+                            <label id="lsCodTrabajador" class="control-label small">@Model.sCodTrabajador</label>                            
+                            @Html.TextBoxFor(x => x.sCodTrabajador, new { @class = "form-control", id = "sCodTrabajador" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sTrabajador, new { @class = "control-label small" })
+                            <label class="control-label small">@Model.sTrabajador</label>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sDepencia, new { @class = "control-label small" })
+                            <label id="lsDepenciaT" class="control-label small">@Model.sDepencia</label>
+                            @Html.TextBoxFor(x => x.sCodDepencia, new { @class = "form-control", id = "sCodDepencia" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sCargo, new { @class = "control-label small" })
+                            <label id="lsCargoT" class="control-label small">@Model.sCargo</label>
+                            @Html.TextBoxFor(x => x.sCodCargo, new { @class = "form-control", id = "sCodCargo" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sPlanilla, new { @class = "control-label small" })                            
+                            <label id="lsPlanillaT" class="control-label small">@Model.sPlanilla</label>
+                            @Html.TextBoxFor(x => x.sCodPlanilla, new { @class = "form-control", id = "sCodPlanilla" })
+                            @Html.TextBoxFor(x => x.sPeriodo, new { @class = "form-control", id = "sPeriodo" })
+                            @Html.TextBoxFor(x => x.iSecPrograma, new { @class = "form-control", id = "iSecPrograma" })
+                            @Html.TextBoxFor(x => x.sDpProgramar, new { @class = "form-control", id = "sDpProgramar" })
+                            @Html.TextBoxFor(x => x.sTipoUrl, new { @class = "form-control", id = "sTipoUrl" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos del Periodo</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body with-border">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            @Html.LabelFor(x => x.sFehIni)
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBoxFor(x => x.sFehIni, new { @class = "form-control datepicker", id = "sFehIni" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(x => x.sFehFin)
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBoxFor(x => x.sFehFin, new { @class = "form-control datepicker", id = "sFehFin" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.sObserv)
+                        @Html.TextBoxFor(x => x.sObserv, new { @class = "form-control datepicker", id = "sObserv" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.sMotivo)
+                        @Html.TextBoxFor(x => x.sMotivo, new { @class = "form-control datepicker", id = "sMotivo" })
+                       
+                    </div>
+                </div>
+                <div class="box-footer with-border">
+                    <a href="#" id="btnGuardar" class="btn btn-primary pull-right">Guardar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

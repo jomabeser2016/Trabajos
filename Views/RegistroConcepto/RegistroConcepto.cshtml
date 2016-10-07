@@ -1,0 +1,134 @@
+﻿@model RecursosHumanos.Models.RegistroConcepto
+@{
+    ViewBag.Title = "Concepto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section JavaScript{
+    <script type="text/javascript">
+        var requrlSave = '@Url.Action("RegistrarConceptoSolicitud", "RegistroConcepto", null, Request.Url.Scheme)';
+        var requrlEdit = '@Url.Action("ActualizarConceptoSolicitud", "RegistroConcepto", null, Request.Url.Scheme)';    
+        var requrlConsulta = '@Url.Action("ConsultarConcepto", "ConsultarConcepto", null, Request.Url.Scheme)';
+        var requrlError = '@Url.Action("Error400", "Error")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/view/RegistroConcepto.js")"></script>
+}
+
+<section class="content-header">
+    <h1><em>Mantenimiento Concepto</em></h1>
+    <ol class="breadcrumb">
+        @Html.MvcSiteMap().SiteMapPath()
+    </ol>
+</section>
+
+<section class="content">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmManConcepto" }))
+    {        
+        <div class="row">
+            <div class="col-md-3">
+                <div data-spy="affix" data-offset-top="0" style="width:320px;">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Datos de Auditoria</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body with-border">
+                            <div class="form-group form-group-sm">
+                                @Html.LabelFor(x => x.sUsuRegistro, new { @class = "control-label small" })
+                                <label class="control-label small">@Model.sUsuRegistro</label>
+                            </div>
+
+                            <div class="form-group form-group-sm">
+                                @Html.LabelFor(x => x.sFehRegistro, new { @class = "control-label small" })
+                                <label id="lblsFehRegistro" class="control-label small">@Model.sFehRegistro</label>
+                            </div>
+
+                            <div class="form-group form-group-sm">
+                                @Html.LabelFor(x => x.sUsuActualizar, new { @class = "control-label small" })
+                                <label class="control-label small">@Model.sUsuActualizar</label>
+                            </div>
+
+                            <div class="form-group form-group-sm">
+                                @Html.LabelFor(x => x.sFehActualizar, new { @class = "control-label small" })
+                                <label class="control-label small">@Model.sFehActualizar</label>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Concepto</h3>
+                        <div class="box-tools pull-right">
+                            <div class="btn-group">
+                                <a href="#" id="btnCancelarTop" class="btn btn-primary" title="Cancelar"><i class="fa fa-reply"></i></a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="#" id="btnGuardarTop" class="btn btn-primary" title="Guardar"><i class="fa fa-floppy-o"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(x => x.sCodConcepto)
+                                    @Html.TextBoxFor(x => x.sCodConcepto, new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.LabelFor(x => x.sTipoConcepto)
+                                    @Html.TextBoxFor(x => x.sTipoConcepto, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(x => x.sConcepto)
+                                    @Html.TextBoxFor(x => x.sConcepto, new { @class = "form-control" })                                    
+                                </div>                                
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(x => x.sMensajeConcepto)
+                                    @Html.TextBoxFor(x => x.sMensajeConcepto, new { @class = "form-control" })                                    
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    @Html.LabelFor(x => x.sQueryConcepto)
+                                    @Html.TextAreaFor(x => x.sQueryConcepto, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-1">
+                                    @Html.Label("Estado")
+                                </div>
+                                <div class="col-md-11">
+                                    @{ bool isChecked = ViewBag.isChecked; }
+                                    @Html.CheckBox("ckbEstado", isChecked)
+                                    @Html.HiddenFor(x => x.sEstado)
+                                    @Html.HiddenFor(x => x.sAccion)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer with-border">
+                        <div class="box-tools pull-right">
+                            <div class="btn-group">
+                                <a href="#" id="btnCancelarBotton" class="btn btn-primary" title="Cancelar"><i class="fa fa-reply"></i></a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="#" id="btnGuardarBotton" class="btn btn-primary" title="Guardar"><i class="fa fa-floppy-o"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                  
+            </div>
+        </div>
+    }
+</section>
+
+   

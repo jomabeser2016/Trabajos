@@ -1,0 +1,67 @@
+﻿@using Forloop.HtmlHelpers
+@model RecursosHumanos.Models.ModalRegistroSolicitudRRHH
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Programación de Solicitud</h4>
+        </div>
+        <!-- /.modal-header -->
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(x => x.sFehIni)
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.TextBoxFor(x => x.sFehIni, "{0:dd/mm/yyyy}", new { @class = "form-control", id = "sFehIni"})                                            
+                                        </div>                                        
+                                        @Html.ValidationMessageFor(x => x.sFehIni, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(x => x.sFehFin)
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.TextBoxFor(x => x.sFehFin, new { @class = "form-control datepicker", id = "sFehFin" })                                            
+                                        </div>
+                                        @Html.ValidationMessageFor(x => x.sFehFin, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        @Html.LabelFor(x => x.sObserv)
+                                        @Html.TextBoxFor(x => x.sObserv, new { @class = "form-control", id = "sObserv" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-body -->
+        <div class="modal-footer">
+            <button id="btnCerrar" type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+            <a href="#" id="btnAceptar" type="button" class="btn btn-primary">Aceptar</a>
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+
+@using (var context = Html.BeginScriptContext())
+{
+    //Html.AddScriptFile("~/Scripts/view/CargarModalAutenticacion.js", true);
+    context.AddScriptFile("~/Scripts/view/ModalRegistroSolicitudRRHH.js", true);
+    //context.AddScriptFile("~/Scripts/view/Pruebas.js", true);
+}

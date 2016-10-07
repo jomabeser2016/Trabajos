@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "ConsultarConcepto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section JavaScript{
+    <script type="text/javascript">        
+        var requrlConsulta = '@Url.Action("DevolverDatosSolicitudConcepto", "ConsultarConcepto", null, Request.Url.Scheme)';
+        var requrlMantenimiento = '@Url.Action("RegistroConcepto", "RegistroConcepto")';
+        var requrlEncriptarDatosEditar = '@Url.Action("EncriptarDatosEditar", "ConsultarConcepto")';
+        var requrlEncriptarDatosNuevo = '@Url.Action("EncriptarDatosNuevo", "ConsultarConcepto")';
+        var requrlError = '@Url.Action("Error400", "Error")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/view/ConsultarConcepto.js")"></script>
+}
+
+<section class="content-header">
+    <h1><em>Consultar Parámetros</em></h1>
+    <ol class="breadcrumb">
+        @Html.MvcSiteMap().SiteMapPath()
+    </ol>
+</section>
+<section class="content">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmConsultarConcepto" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Lista de Conceptos</h3>                
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <div class="btn-group">
+                        <a href="#" id="btnNuevo" class="btn btn-default" title="Nuevo Concepto"><i class="fa fa-file-o"></i></a>
+                        <a href="#" id="btnEditar" class="btn btn-default" title="Editar Concepto"><i class="fa fa-edit"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="grdConcepto"></table>
+                <div id="pageConcepto"></div>
+            </div>
+            
+        </div>
+    }
+</section>

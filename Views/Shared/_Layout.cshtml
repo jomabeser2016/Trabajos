@@ -1,0 +1,64 @@
+﻿@using System.Web.Optimization
+@using Forloop.HtmlHelpers
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <title>@ViewBag.Title</title>
+    
+    @Styles.Render("~/bootstrap/css")
+    @Styles.Render("~/plugins/css")
+    @Styles.Render("~/dist/css")
+
+</head>
+<body class="hold-transition skin-SAT sidebar-collapse sidebar-mini">
+
+    <div class="wrapper">
+        @Html.Action("_Cabecera", "Estructura")
+
+        @Html.Action("_SideBarIzquierdo", "Estructura")
+
+        <!-- *************INICIO CUERPO DE LA PÁGINA************* -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper cuerpo">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- *************FIN CUERPO DE LA PÁGINA************* -->
+        @Html.Action("_PiePagina", "Estructura")
+
+        @*@Html.Action("_SideBarDerecho", "Estructura")*@
+
+    </div>
+
+    <!-- ini Progress -->
+    @*<div class="modal hide" id="SATDEMO_PleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-body">
+                <img src="@Url.Content("~/dist/img/img-loader.gif")" />
+            </div>
+        </div>*@
+
+    <div id="modalLoading" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <img src="@Url.Content("~/dist/img/loading3.gif")" class="imgcenter" width="100" height="100" />
+    </div>
+    <!-- fin Progress -->
+    @**CORE**@
+    @Scripts.Render("~/plugins/jQuery")
+    @Scripts.Render("~/bootstrap/js")
+    @Scripts.Render("~/plugins/validation")
+    @Scripts.Render("~/plugins/js")
+    @Scripts.Render("~/dist/js")
+
+    @*JS Adicionales*@
+
+    @Scripts.Render("~/Scripts/Layout")
+
+    @RenderSection("JavaScript", required: false)
+    @Html.RenderScripts()
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+﻿@model RecursosHumanos.Models.ConsultaSolicitud
+@{
+    ViewBag.Title = "ConsultaSolicitud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section JavaScript{
+    <script type="text/javascript">
+        var requrlModalAutenticacion = '@Url.Action("ModalSolicitud", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlDatosTrabajador = '@Url.Action("DevolverDatosTrabajador", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlPeriodo = '@Url.Action("DevolverSolicitudDescansoFisico", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlDatosPeriodo = '@Url.Action("ObtenerDiasporAnio", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlMostrarSolicitud = '@Url.Action("DevolverDetalleSolicitudDescansoFisico", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlMantenimiento = '@Url.Action("MantenimientoSolicitud", "MantenimientoSolicitud")';
+        var requrlEditar = '@Url.Action("EdicionSolicitud", "EdicionSolicitud")';
+        var requrlDatos = '@Url.Action("ActualizarDetalleDescansoFisico", "ConsultaSolicitud", null, Request.Url.Scheme)';
+        var requrlListarAccesoOpcionMenu = '@Url.Action("ListarAccesoOpcionMenu", "ConsultaSolicitud")';
+        var requrlError = '@Url.Action("Error400", "Error")';
+        var requrlEncriptarDatosEditar = '@Url.Action("EncriptarDatosEditar", "ConsultaSolicitud")';
+        var requrlEncriptarDatosNuevo = '@Url.Action("EncriptarDatosNuevo", "ConsultaSolicitud")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/view/ConsultaSolicitud.js")"></script>
+}
+<section class="content-header">
+    <h1><em>Mis Solicitudes</em></h1>
+    <ol class="breadcrumb">
+        @Html.MvcSiteMap().SiteMapPath()
+    </ol>
+    @*<ol class="breadcrumb">
+        <li class="active"><i class="fa fa-dashboard"></i> Home</li>
+    </ol>*@
+</section>
+<section class="content">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmConsultaSolicitud" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <input id="hdOpcion" type="hidden" value="@ViewBag.idOpcion" name="hdOpcion" />
+        <div class="col-md-3">
+            @*<div data-spy="affix" data-offset-top="0" style="width:320px;">*@
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Datos del Trabajador</h3>
+                        <div class="box-tools">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body with-border">
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sCodTrabajador, new { @class = "control-label small" })
+                            <label id="lsCodTrabajador" class="control-label small">@Model.sCodTrabajador</label>
+                            @Html.TextBoxFor(x => x.sCodTrabajador, new { @class = "form-control", id = "sCodTrabajador" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sTrabajador, new { @class = "control-label small" })
+                            <label class="control-label small">@Model.sTrabajador</label>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sDepenciaT, new { @class = "control-label small" })
+                            <label id="lsDepenciaT" class="control-label small">@Model.sDepenciaT</label>
+                            @Html.TextBoxFor(x => x.sCodDepencia, new { @class = "form-control", id = "sCodDepencia" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sCargoT, new { @class = "control-label small" })
+                            <label id="lsCargoT" class="control-label small">@Model.sCargoT</label>
+                            @Html.TextBoxFor(x => x.sCodCargo, new { @class = "form-control", id = "sCodCargo" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sPlanillaT, new { @class = "control-label small" })
+                            <label id="lsPlanillaT" class="control-label small">@Model.sPlanillaT</label>
+                            @Html.TextBoxFor(x => x.sCodPlanilla, new { @class = "form-control", id = "sCodPlanilla" })
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sModalidad, new { @class = "control-label small" })
+                            <label id="lsModalidad" class="control-label small">@Model.sModalidad</label>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            @Html.LabelFor(x => x.sFehIng, new { @class = "control-label small" })
+                            <label id="lsFehIng" class="control-label small">@Model.sFehIng</label>
+                        </div>
+
+                    </div>
+                </div>
+            @*</div>*@
+        </div>
+        <div class="col-md-9">
+            @*@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNuevaSolicitud" }))
+            {*@
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Criterio de Búsqueda</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(x => x.slPeriodoT)
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.DropDownListFor(x => x.slPeriodoT, Model.slPeriodoT, new { @class = "form-control", id = "slPeriodoT" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(x => x.slEstado, new { @class = "control-label" })
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.DropDownListFor(x => x.slEstado, Model.slEstado, new { @class = "form-control", id = "slEstado" })
+                                    @*@Html.DropDownListFor(x => x.slTrabajadorB, Model.slTrabajadorB, new { @class = "form-control select2", id = "slTrabajadorB", style = "width: 100%;" })*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer with-border">
+                    <a href="#" id="btnBuscar" class="btn btn-primary pull-right">Buscar</a>
+                </div>
+            </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Datos del Periodo</h3>
+                    <div class="box-tools">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body with-border">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label small">Periodo Generación</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label id="lsFehIniGen" class="control-label small">@Model.sFehIniGen</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label small">AL</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label id="lsFehFinGen" class="control-label small">@Model.sFehFinGen</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label small">Periodo Goce</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label id="lsFehIniGoc" class="control-label small">@Model.sFehIniGoc</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label small">AL</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label id="lsFehFinGoc" class="control-label small">@Model.sFehFinGoc</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.LabelFor(x => x.sDGozados, new { @class = "control-label small" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lsDGozados" class="control-label small">@Model.sDGozados</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.LabelFor(x => x.sDProgram, new { @class = "control-label small" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lsDProgram" class="control-label small">@Model.sDProgram</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    @Html.LabelFor(x => x.sDpProgramar, new { @class = "control-label small" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lsDpProgramar" class="control-label small">@Model.sDpProgramar</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+
+                                <div class="col-md-8">
+                                    @Html.LabelFor(x => x.sTotal, new { @class = "control-label small" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lsTotal" class="control-label small">@Model.sTotal</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div class="mailbox-controls">
+                        <div class="btn-group">
+                            <a href="#" id="btnNuevo" class="btn btn-default" title="Nueva Solicitud"><i class="fa fa-file-o"></i></a>
+                            <a href="#" id="btnEditar" class="btn btn-default" title="Editar Solicitud"><i class="fa fa-edit"></i></a>
+                            <a href="#" id="btnEliminar" class="btn btn-default" title="Anular Solicitud"><i class="fa fa-ban"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">                    
+                    <table id="grdSolicitud"></table>
+                    <div id="pageSolicitud"></div>
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+}
+</section>
+
