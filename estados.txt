@@ -1,0 +1,153 @@
+ public ActionResult CasuisticaConsultarAsignaciones()
+        {
+            CasuisticaConsultarAsignaciones obj = new CasuisticaConsultarAsignaciones();
+
+            try
+            {
+                obj.slEstado = (SelectList)JQuery.SelectListAddItem(CDevolverEstadoCasuistica(), "Valor", "Texto", "", "Seleccione un estado...");
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return View(obj);
+
+            //return View();
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public List<ItemSelectList> CDevolverEstadoCasuistica()
+        {
+            List<ItemSelectList> lstItemSelectList = new List<ItemSelectList>();
+            ItemSelectList itemSelectList = new ItemSelectList();
+
+            //FiltroSolicitud obj = new FiltroSolicitud();
+            List<ListaEstCasuistica> lst = new List<ListaEstCasuistica>();
+
+            try
+            {
+                //obj.TIPO_PLAN_TPL = TIPO_PLAN_TPL;
+                //obj.CODI_EMPL_PER = CODI_EMPL_PER;
+                lstItemSelectList = new MCSIServicio().DevolverEstadosCasuistica();
+
+                foreach (ListaEstCasuistica item in lstItemSelectList)
+                {
+                    //ItemSelectList _Obj = new ItemSelectList();
+                    itemSelectList = new ItemSelectList();
+                    itemSelectList.Valor = Convert.ToString(item.siCodEstCasuistica);
+                    itemSelectList.Texto = item.vNomEstCasuistica;
+                    lstItemSelectList.Add(itemSelectList);
+                }
+            }
+            catch (Exception ex)
+            {
+                /*
+                Registro.RegistrarLog(NivelLog.Error, "Error", ex);
+                return null;
+                */
+                throw;
+            }
+
+            return lstItemSelectList;
+
+
+
+
+
+            //List<ItemSelectList> lst = new List<ItemSelectList>();
+
+            //try
+            //{
+            //    lst = new MCSIServicio().DevolverEstadosCasuistica();
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
+
+            //return lst;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function CargarEstados() {
+        //var slPlanilla = $('#slPlanilla').val();
+        //var slDependencia = $('#slDependencia').val();
+        //var slCargo = $('#slCargo').val();
+        //var slPeriodo = $('#slPeriodo').val();
+        //var slMes = $('#slMes').val();
+        //var sCodEstado = "4";
+
+        var dato = JSON.stringify([{
+            //TIPO_PLAN_TPL: slPlanilla,
+            //CODI_DEPE_TDE: slDependencia,
+            //CODI_NIVE_TNI: slCargo,
+            //PERI_GENE_DFI: slPeriodo,
+            //PERI_GENE_DDF: slMes,
+            //CODI_EST_DDF: sCodEstado
+        }]);
+        $("#slEstado").empty();
+        $.ajax({
+            url: requrlCargarEstadoCasuistica,
+            dataType: "json",
+            async: false,
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            //data: "{'dato':'" + dato + "'}",
+            success: function (response) {
+                var slEstado = $("#slEstado");
+                slEstado.empty();
+                $.each(response, function (index, item) {
+                    slEstado.append("<option value=" + response[index].Valor +
+                            ">" + response[index].Texto + "</option>");
+                })
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
+    }
