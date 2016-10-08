@@ -1,1 +1,0 @@
- @Html.DropDownListFor(x => x.slGrupo, Enumerable.Empty<SelectListItem>(), "Seleccione el Grupo...", new { id = "slGrupo", @class = "form-control" })
