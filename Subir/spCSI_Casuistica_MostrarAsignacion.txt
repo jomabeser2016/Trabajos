@@ -1,0 +1,98 @@
+USE [BDMCSI]
+GO
+/****** Object:  StoredProcedure [dbo].[spCSI_Casuistica_MostrarAsignacion]    Script Date: 04/10/2016 08:56:32 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--********************************************************************************************************************** 
+-- Descripcion       : Procedimiento almacenado para listar las Casuisticas
+--                     Activo.
+-- Input             : Ninguno. 
+-- Output            : Listado de Casuisticas.
+-- Creado por        : (Jose o Edward)
+-- RQ                : XXXXX
+-- Motivo            : Proyecto MCSISAT
+-- Fecha             : XX/XX/XXXX
+-- Replicado         : <Fecha Replicado> - <SERVIDOR>.<BASE DATOS>
+----------------------------------------------------------------------------------------------------------------------  
+-- Fec Actualización : XX/XX/XXXX
+-- Responsable       : Analista
+-- RQ                : <Numero de Requerimiento>
+-- Motivo            : <Motivo de la modificacion>
+--**********************************************************************************************************************
+/*
+Exec [dbo].[spCSI_Casuistica_MostrarAsignacion]
+spCSI_Casuistica_MostrarAsignacion_PorFiltro 0,'Suna','','',''
+*/ 
+ALTER Procedure [dbo].[spCSI_Casuistica_MostrarAsignacion]
+--As
+--Begin
+   
+--   Set NoCount On
+   
+--   select	mc.iCodCasuistica,
+--			mc.vNomCasuistica,
+--			mc.vDesCasuistica,
+--			gc.vNomGruCasuistica,
+--			isnull(uo.vDesUOr,'') as vDesUOr,
+--			ec.vNomEstCasuistica
+			
+--	from dbo.CSIMaeCasuistica mc
+--	inner join dbo.CSITabGruCasuistica gc on mc.siCodGrupo=gc.siCodGrupo
+--	inner join dbo.CSITabEstCasuistica ec on mc.siCodEstCasuistica=ec.siCodEstCasuistica
+--	--inner join SIAT002..SGTabNDe nd on mc.siCodNDE=nd.siCodNDe
+--	left join dbo.CSIMovCasuisticaUOr mv on mc.iCodCasuistica=mv.iCodCasuistica  And mv.bActivo = 1
+--	left join BDEOSCH..SGTabUOr uo on mv.siCodUor=uo.siCodUOr
+
+--   Set NoCount Off
+   
+--End
+@piCodCasuistica int,
+ @pvNomCasuistica varchar(100),
+ @pvNomGruCasuistica varchar(100),
+ @pvDesUOr varchar(100),
+ @pvNomEstCasuistica varchar(100)
+ as
+ begin
+ Set NoCount On
+
+DECLARE @SQL AS VARCHAR(MAX) 
+ SET @SQL = 'select	mc.iCodCasuistica,
+			mc.vNomCasuistica,
+			mc.vDesCasuistica,
+			gc.vNomGruCasuistica,
+			isnull(uo.vDesUOr,'''') as vDesUOr,
+			ec.vNomEstCasuistica
+			
+	from dbo.CSIMaeCasuistica mc
+	inner join dbo.CSITabGruCasuistica gc on mc.siCodGrupo=gc.siCodGrupo
+	inner join dbo.CSITabEstCasuistica ec on mc.siCodEstCasuistica=ec.siCodEstCasuistica
+	--inner join SIAT002..SGTabNDe nd on mc.siCodNDE=nd.siCodNDe
+	left join dbo.CSIMovCasuisticaUOr mv on mc.iCodCasuistica=mv.iCodCasuistica  And mv.bActivo = 1
+	left join BDEOSCH..SGTabUOr uo on mv.siCodUor=uo.siCodUOr where 1=1 ' 
+
+	IF @piCodCasuistica <> 0
+		BEGIN 
+			SET @SQL = @SQL + ' AND  mc.iCodCasuistica = ' + CHAR(39) + CONVERT(VARCHAR, @piCodCasuistica ) +  CHAR(39) 
+		END 
+	 IF @pvNomCasuistica <> '' 
+		BEGIN 
+			SET @SQL = @SQL + ' AND mc.vNomCasuistica LIKE ' + CHAR(39) + '%'+ @pvNomCasuistica +'%' +  CHAR(39) 
+		End
+	IF @pvNomGruCasuistica <> ''
+		BEGIN 
+			SET @SQL = @SQL + ' AND gc.vNomGruCasuistica = ' + CHAR(39) +  @pvNomGruCasuistica  +  CHAR(39) 
+		END 
+	IF @pvDesUOr <> ''
+		BEGIN 
+			SET @SQL = @SQL + ' AND uo.vDesUOr = ' + CHAR(39) +  @pvDesUOr  +  CHAR(39) 
+		END 
+	IF @pvNomEstCasuistica <> ''
+		BEGIN 
+			SET @SQL = @SQL + ' AND ec.vNomEstCasuistica = ' + CHAR(39) +  @pvNomEstCasuistica  +  CHAR(39) 
+		END 
+
+exec(@SQL) 
+Set NoCount Off
+END

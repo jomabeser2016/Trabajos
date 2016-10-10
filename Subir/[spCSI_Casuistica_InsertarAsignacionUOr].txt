@@ -1,0 +1,60 @@
+USE [BDMCSI]
+GO
+/****** Object:  StoredProcedure [dbo].[spCSI_Casuistica_InsertarAsignacionUOr]    Script Date: 04/10/2016 08:55:47 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--********************************************************************************************************************** 
+-- Descripcion       : Procedimiento almacenado para Insertar las Casuisticas Asignadas
+--                     Activo.
+-- Input             : Ninguno. 
+-- Output            : Listado de Casuisticas Asignadas.
+-- Creado por        : (Jose o Edward)
+-- RQ                : XXXXX
+-- Motivo            : Proyecto MCSISAT
+-- Fecha             : XX/XX/XXXX
+-- Replicado         : <Fecha Replicado> - <SERVIDOR>.<BASE DATOS>
+----------------------------------------------------------------------------------------------------------------------  
+-- Fec Actualización : XX/XX/XXXX
+-- Responsable       : Analista
+-- RQ                : <Numero de Requerimiento>
+-- Motivo            : <Motivo de la modificacion>
+--**********************************************************************************************************************
+/*
+select * from [dbo].[CSIMovCasuisticaUOr]
+
+spCSI_Casuistica_InsertarAsignacionUOr 1,5,3,'05/10/2016','05/10/2016',1,1,'05/10/2016','PC001',1,'05/10/2016','PC001'
+*/ 
+ALTER procedure [dbo].[spCSI_Casuistica_InsertarAsignacionUOr]
+@psiCodMun smallint,
+@piCodCasuistica int,
+@psiCodUOr smallint,
+@psdFecIniAsignacion smalldatetime='01/01/1901',
+@psdFecFinAsignacion smalldatetime='01/01/1901',
+@pbActivo bit,
+@psiCodUsuCreacion smallint,
+@psdFecCreacion smalldatetime='01/01/1901',
+@pcNomTerCreacion char(20),
+@psiCodUsu smallint ,
+@psdFecAct smalldatetime='01/01/1901',
+@pcNomTer  char(20)
+as
+begin
+Set NoCount On
+
+			insert into CSIMovCasuisticaUOr values	(@psiCodMun,													
+													@piCodCasuistica,
+													@psiCodUOr,
+													@psdFecIniAsignacion,
+													@psdFecFinAsignacion,
+													@pbActivo,
+													@psiCodUsuCreacion,
+													GETDATE(),
+													@pcNomTerCreacion,
+													@psiCodUsu,
+													GETDATE(),
+													@pcNomTer)
+
+Set NoCount Off
+end

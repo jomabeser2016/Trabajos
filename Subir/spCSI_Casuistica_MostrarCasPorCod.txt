@@ -1,0 +1,24 @@
+USE [BDMCSI]
+GO
+/****** Object:  StoredProcedure [dbo].[spCSI_Casuistica_MostrarCasPorCod]    Script Date: 04/10/2016 08:57:58 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER Procedure [dbo].[spCSI_Casuistica_MostrarCasPorCod]
+@piCodCasuistica int
+As
+Begin
+   
+   Set NoCount On
+   
+   select	iCodCasuistica,
+			vNomCasuistica,
+			vDesCasuistica
+		
+	from CSIMaeCasuistica 	where iCodCasuistica=@piCodCasuistica
+
+   Set NoCount Off
+   
+End
