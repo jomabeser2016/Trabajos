@@ -1,0 +1,33 @@
+declare @columnas nvarchar(max)
+set @columnas = ''
+select @columnas =  coalesce(@columnas + '['+ vNomColumna  + '], ', '')
+FROM (select distinct  vNomColumna from CSIDetInconsistencia) as DTM
+set @columnas = left(@columnas,LEN(@columnas)-1)
+DECLARE @SQLString nvarchar(max)
+set @SQLString = N'
+SELECT *
+FROM
+(SELECT SicodMun,bicodInconsistencia,vNomColumna,vValColumna 
+    FROM CSIDetInconsistencia) AS SourceTable
+PIVOT
+(
+max(vValColumna)
+FOR vNomColumna IN (' + @columnas + ')
+) AS PivotTable 
+inner join CSIMaeInconsistencia mi on pv.biCodInconsistencia=mi.biCodInconsistencia
+inner join CSIMaeCasuistica mc on mi.iCodCasuistica=mc.iCodCasuistica'
+
+print @SQLString
+
+
+SELECT *
+FROM
+(SELECT SicodMun,bicodInconsistencia,vNomColumna,vValColumna 
+    FROM CSIDetInconsistencia) AS SourceTable
+PIVOT
+(
+max(vValColumna)
+FOR vNomColumna IN ([Agencia], [Usuario], [Nro DJ], [% Propiedad], [Valor del Terreno], [Descripción de Domicilio Transferente], [Area Comun del Terreno], [Fecha Adquisición], [Código de Predio Transferente], [Fecha Registro], [Codigo de Predio], [Uso], [Año Inicial de Afectación], [Ubicacion del Predio], [Predio en Edificio], [Código de Persona Transferente], [Nombre Completo Transferente], [Nombre], [Area del Terreno], [Area Total Construida], [nAutova], [Año Final de Afectación], [Codigo], [Fecha DJ])
+) AS PivotTable 
+inner join CSIMaeInconsistencia mi on pv.biCodInconsistencia=mi.biCodInconsistencia
+inner join CSIMaeCasuistica mc on mi.iCodCasuistica=mc.iCodCasuistica
