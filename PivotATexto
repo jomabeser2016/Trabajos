@@ -1,0 +1,60 @@
+USE [BDMCSI]
+GO
+/****** Object:  StoredProcedure [dbo].[spCSI_Insonsistencias_MostrarDetallePorCodCasuistica]    Script Date: 10/11/2016 18:03:35 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--********************************************************************************************************************** 
+-- Descripcion       : Procedimiento almacenado para listar las Detalle de Insonsistencias por Codigo de Casuisticas
+--                     Activo.
+-- Input             : Ninguno. 
+-- Output            : Lista el detalle de Inconsistencias por Casuistica.
+-- Creado por        : (Jose o Edward)
+-- RQ                : XXXXX
+-- Motivo            : Proyecto MCSISAT
+-- Fecha             : XX/XX/XXXX
+-- Replicado         : <Fecha Replicado> - <SERVIDOR>.<BASE DATOS>
+----------------------------------------------------------------------------------------------------------------------  
+-- Fec Actualización : XX/XX/XXXX
+-- Responsable       : Analista
+-- RQ                : <Numero de Requerimiento>
+-- Motivo            : <Motivo de la modificacion>
+--**********************************************************************************************************************
+/*
+
+spCSI_Insonsistencias_MostrarDetallePorCodCasuistica 1
+*/ 
+ALTER Procedure [dbo].[spCSI_Insonsistencias_MostrarDetallePorCodCasuistica]
+ @piCodCasuistica int
+ as
+ begin
+ Set NoCount On
+		DECLARE @SQLString nvarchar(max)
+		DECLARE @columnas nvarchar(max)
+		set @columnas = ''
+				select @columnas =  coalesce(@columnas + '['+ vNomColumna  + '] , ', '')
+				FROM (select distinct  vNomColumna from CSIDetInconsistencia) as DTM		
+		set @columnas = left(@columnas,LEN(@columnas)-1)
+		
+		DECLARE @columnasSelect nvarchar(max)
+		set @columnasSelect = REPLACE(@columnas,',','+''@''+')
+		
+	
+		set @SQLString = N'
+				SELECT  '+@columnasSelect + ' as Datos  FROM
+				(SELECT SicodMun,bicodInconsistencia,vNomColumna,vValColumna 
+				FROM CSIDetInconsistencia) AS SourceTable
+PIVOT
+				(
+				max(vValColumna)
+				FOR vNomColumna IN (' + @columnas + ')
+				) AS Pv
+				inner join CSIMaeInconsistencia mi on pv.biCodInconsistencia=mi.biCodInconsistencia
+				inner join CSIMaeCasuistica mc on mi.iCodCasuistica=mc.iCodCasuistica  '
+		SET @SQLString = @SQLString + ' AND  mc.iCodCasuistica = ' + CHAR(39) + CONVERT(VARCHAR, @piCodCasuistica ) +  CHAR(39) 
+
+
+exec(@SQLString) 
+Set NoCount Off
+END
