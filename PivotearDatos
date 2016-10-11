@@ -1,0 +1,29 @@
+
+ALTER Procedure [dbo].[spCSI_Insonsistencias_MostrarDetallePorCodCasuistica]
+ @piCodCasuistica int
+ as
+ begin
+ Set NoCount On
+		DECLARE @SQLString nvarchar(max)
+		DECLARE @columnas nvarchar(max)
+		set @columnas = ''
+				select @columnas =  coalesce(@columnas + '['+ vNomColumna  + '] , ', '')
+				FROM (select distinct  vNomColumna from CSIDetInconsistencia) as DTM
+		set @columnas = left(@columnas,LEN(@columnas)-1)
+	
+		set @SQLString = N'
+				SELECT  '+@columnas + ' FROM
+				(SELECT SicodMun,bicodInconsistencia,vNomColumna,vValColumna 
+				FROM CSIDetInconsistencia) AS SourceTable
+PIVOT
+				(
+				max(vValColumna)
+				FOR vNomColumna IN (' + @columnas + ')
+				) AS Pv
+				inner join CSIMaeInconsistencia mi on pv.biCodInconsistencia=mi.biCodInconsistencia
+				inner join CSIMaeCasuistica mc on mi.iCodCasuistica=mc.iCodCasuistica  '
+		SET @SQLString = @SQLString + ' AND  mc.iCodCasuistica = ' + CHAR(39) + CONVERT(VARCHAR, @piCodCasuistica ) +  CHAR(39) 
+
+exec(@SQLString) 
+Set NoCount Off
+END
