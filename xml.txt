@@ -1,0 +1,61 @@
+<ROOT>
+   <Arb siCodMun="1" biNumero_Tra="5001217" iNumero_RegCar="9305959" siCodigo_Ser="403" cNumeroGenDoc_DocRes="267-051-00209608 " 
+         vFechaDocResFormatoLargo="17 de mayo de 2016" cNumeroGenDoc_Tra="262-089-00860218 " vFechaPresentacion_Tra="17/05/2016" 
+         vAdministrado_Tra="QUISPE MAMANI AQUILINA" cNumDocIdeAdministrado_Tra="08970366    " 
+         vDomAdministrado_Tra="AV DEL EJERCITO N° 466 Int B - URB MARIANO MELGAR, VILLA MARIA DEL TRIUNFO" cNumDoc="C165476      " 
+         sdFecInf="16 de julio de 2012" cCodFal="N71  " cPlaca="P1D748                                                      " 
+         vDesFal="Circular estando fuera de servicio sin contar con el letrero “FUERA DE SERVICIO&quot;" nPorUIT="10.00" 
+         vTexto="" cNumRecDerecho="340054150519    " nValTasDerecho="12.00" siCodUsuFirma="3492" vTipDocIde="DNI/Libreta Electoral" 
+         vOrdenanza="1599" vArticulo="104" />
+</ROOT>
+
+
+<ROOT>
+   <Arb siCodMun="1" biNumero_Tra="5001217" iNumero_RegCar="9305959" siCodigo_Ser="403" cNumeroGenDoc_DocRes="267-051-00209608 " 
+         vFechaDocResFormatoLargo="17 de mayo de 2016" cNumeroGenDoc_Tra="262-089-00860218 " vFechaPresentacion_Tra="17/05/2016" 
+         vAdministrado_Tra="QUISPE MAMANI AQUILINA" cNumDocIdeAdministrado_Tra="08970366    " 
+         vDomAdministrado_Tra="AV DEL EJERCITO N° 466 Int B - URB MARIANO MELGAR, VILLA MARIA DEL TRIUNFO" cNumDoc="C165476      " 
+         sdFecInf="16 de julio de 2012" cCodFal="N71  " cPlaca="P1D748                                                      " 
+         vDesFal="Circular estando fuera de servicio sin contar con el letrero “FUERA DE SERVICIO&quot;" nPorUIT="10.00" 
+         vTexto="" cNumRecDerecho="340054150519    " nValTasDerecho="12.00" siCodUsuFirma="3492" vTipDocIde="DNI/Libreta Electoral" 
+         vOrdenanza="1599" vArticulo="104" />
+</ROOT>
+
+
+<ROOT>
+   <Arb siCodMun="1" biNumero_Tra="5001217" iNumero_RegCar="9305959" siCodigo_Ser="403" cNumeroGenDoc_DocRes="267-051-00209608 " 
+         vFechaDocResFormatoLargo="17 de mayo de 2016" cNumeroGenDoc_Tra="262-089-00860218 " vFechaPresentacion_Tra="17/05/2016" 
+         vAdministrado_Tra="QUISPE MAMANI AQUILINA" cNumDocIdeAdministrado_Tra="08970366    " 
+         vDomAdministrado_Tra="AV DEL EJERCITO N° 466 Int B - URB MARIANO MELGAR, VILLA MARIA DEL TRIUNFO" cNumDoc="C165476      " 
+         sdFecInf="16 de julio de 2012" cCodFal="N71  " cPlaca="P1D748                                                      " 
+         vDesFal="Circular estando fuera de servicio sin contar con el letrero “FUERA DE SERVICIO&quot;" nPorUIT="10.00" 
+         vTexto="" cNumRecDerecho="340054150519    " nValTasDerecho="12.00" siCodUsuFirma="3492" vTipDocIde="DNI/Libreta Electoral" 
+   />
+</ROOT>
+
+
+<ROOT>
+   <Arb siCodMun="1" biNumero_Tra="5001217" iNumero_RegCar="9305959" siCodigo_Ser="403" cNumeroGenDoc_DocRes="267-051-00209608 " 
+         vFechaDocResFormatoLargo="17 de mayo de 2016" cNumeroGenDoc_Tra="262-089-00860218 " vFechaPresentacion_Tra="17/05/2016" 
+         vAdministrado_Tra="QUISPE MAMANI AQUILINA" cNumDocIdeAdministrado_Tra="08970366    " 
+         vDomAdministrado_Tra="AV DEL EJERCITO N° 466 Int B - URB MARIANO MELGAR, VILLA MARIA DEL TRIUNFO" cNumDoc="C165476      " 
+         sdFecInf="16 de julio de 2012" cCodFal="N71  " cPlaca="P1D748                                                      " 
+         vDesFal="Circular estando fuera de servicio sin contar con el letrero “FUERA DE SERVICIO&quot;" nPorUIT="10.00" 
+         vTexto="" cNumRecDerecho="340054150519    " nValTasDerecho="12.00" siCodUsuFirma="3492" vTipDocIde="DNI/Libreta Electoral" 
+   />
+</ROOT>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
