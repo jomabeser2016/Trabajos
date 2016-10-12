@@ -1,0 +1,134 @@
+using SAT.Libreria.JavaScript;
+using SAT.Libreria.Model;
+using SAT.SIAT.App.Servicios.Bus.MCSI;
+using SAT.SIAT.App.Web.MCSI.Models.Inconsistencias;
+using SAT.SIAT.Model.MCSI.Filtros;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;   
+
+
+Pegar en InconsistenciaConsultarActualizarController::::::::::::::::::::::
+
+
+ public ActionResult ExportToExcel()
+        {
+            FiltroCasuistica obj = new FiltroCasuistica();
+            DataTable lst = new DataTable();
+
+            try
+            {
+
+                obj.iCodCasuistica = 1;//Convert.ToInt32(a);
+
+                lst = new MCSIServicio().Insonsistencias_MostrarDetallePorCodCasuistica(obj);
+
+                GridView GridView1 = new GridView();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", "Inconsistencias.xls"));
+                Response.ContentType = "application/ms-excel";
+
+                StringWriter stringWriter = new StringWriter();
+                HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = lst;//ReportExecutor.GetShopReportExportData(DateTime.Now, DateTime.Now);
+                GridView1.DataBind();
+
+                //This will change the header background color
+                GridView1.HeaderRow.Style.Add("background-color", "#FFFFFF");
+
+                //This will apply style to gridview header cells
+                for (int index = 0; index < GridView1.HeaderRow.Cells.Count; index++)
+                {
+                    GridView1.HeaderRow.Cells[index].Style.Add("background-color", "#d17250");
+                }
+
+                int index2 = 1;
+                //This will apply style to alternate rows
+                foreach (GridViewRow gridViewRow in GridView1.Rows)
+                {
+                    gridViewRow.BackColor = Color.White;
+                    if (index2 <= GridView1.Rows.Count)
+                    {
+                        if (index2 % 2 != 0)
+                        {
+                            for (int index3 = 0; index3 < gridViewRow.Cells.Count; index3++)
+                            {
+                                gridViewRow.Cells[index3].Style.Add("background-color", "#eed0bb");
+                            }
+                        }
+                    }
+                    index2++;
+                }
+
+                GridView1.RenderControl(htmlTextWriter);
+
+                Response.Write(stringWriter.ToString());
+                Response.End();
+                return Json(new { successCode = "1" });
+            }
+            catch (Exception e)
+            {
+                return Json(new { successCode = "0" });
+            }
+          
+        }
+        
+
+
+        public ActionResult ExportExcel()
+         {
+             FiltroCasuistica obj = new FiltroCasuistica();
+             DataTable dt = new DataTable();
+             
+         try
+          {
+
+             obj.iCodCasuistica = 1;//Convert.ToInt32(a);
+
+              dt = new MCSIServicio().Insonsistencias_MostrarDetallePorCodCasuistica(obj);
+
+            FileExcel(dt);
+            return Json(new { successCode = "1" });
+                    }
+                    catch (Exception ex)
+                    {
+           return Json(new { successCode = "0" });
+                    }
+
+      
+         }
+
+
+      public void FileExcel(DataTable dt)
+        {
+
+
+            GridView gv = new GridView();
+            gv.DataSource = dt;
+            gv.DataBind();
+
+            HttpContext context = System.Web.HttpContext.Current;
+            context.Response.ClearContent();
+            context.Response.Buffer = true;
+            context.Response.AddHeader("content-disposition", "attachment; filename=Inconsistencias.xls");
+            context.Response.ContentType = "application/ms-excel";
+            context.Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            context.Response.Output.Write(sw.ToString());
+            context.Response.Flush();
+            htw.Close();
+            sw.Close();
+            context.Response.End();
+        }

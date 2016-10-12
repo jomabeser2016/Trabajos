@@ -1,0 +1,6 @@
+<script type="text/javascript"> 
+    var requrlCasuisticaActualizarEstado = '@Url.Action("InconsistenciaActualizarEstado", "InconsistenciaActualizarEstado")';
+    var requrlReporte = '@Url.Action("ExportToExcel", "InconsistenciaConsultarActualizar")';
+
+    var requrlError = '@Url.Action("Error400", "Error")';
+</script>
