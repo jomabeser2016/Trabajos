@@ -1,0 +1,154 @@
+Contrato
+        /// <summary>Método para Listar las Asignaciones de Casuísticas</summary>
+        [OperationContract(Name = "Insonsistencias_MostrarDetallePorCodCasuistica")]
+        [WebInvoke(Method = "POST",
+                   ResponseFormat = WebMessageFormat.Json,
+                   RequestFormat = WebMessageFormat.Json,
+                   BodyStyle = WebMessageBodyStyle.Bare,
+                   UriTemplate = "Insonsistencias_MostrarDetallePorCodCasuistica")]
+        DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica objFiltro);
+
+SERVICIO MCSI
+  public DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica objFiltro)
+    {
+        try
+        {
+
+            Registro.RegistrarLog(NivelLog.Debug, "Invocar método Insonsistencias_MostrarDetallePorCodCasuistica");
+            return new InconsistenciaBLL().Insonsistencias_MostrarDetallePorCodCasuistica(objFiltro);
+        }
+
+        catch (Exception ex)
+        {
+            Excepcion excepcion = new Excepcion();
+            excepcion = ExcepcionWeb.ProcesarExcepcion(ex);
+
+            Registro.RegistrarLog(NivelLog.Error, excepcion.Identificador, ex);
+
+            throw new WebFaultException<Excepcion>(excepcion, HttpStatusCode.InternalServerError);
+        }
+    }
+
+
+
+
+
+NEGOCIO
+
+
+        public DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica objFiltro)
+        {
+            try
+            {
+                DataTable objLst = new DataTable();
+                objLst = InconsistenciaDAL.Insonsistencias_MostrarDetallePorCodCasuistica(objFiltro);
+                return objLst;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+
+
+
+DAtos 
+        public DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica Cas)
+        {
+            var objDatabase = DatabaseFactory.CrearDatabase(KSTR_NOMBRE_DB_MCSI, KSTR_NOMBRE_DB_MCSI);
+
+            DbCommand cmd;
+            DataTable dt1 = new DataTable();
+            List<DataTable> obj = new List<DataTable>();
+            
+            //List<ListaDatatable> objLst = new List<ListaDatatable>();
+            List<DataRow> objLst = new List<DataRow>();
+            DataTable dt = new DataTable("Datos");
+            List<DataColumn> listCols = new List<DataColumn>();
+            //DataTable dtCustomers = new DataTable("Datos");
+            /////   DataTable input;
+            try
+            {
+                using (DbConnection con = objDatabase.CreateConnection())
+                {
+                    con.Open();
+                    try
+                    {
+                        //DataSet dataSet = new DataSet();                        
+                        cmd = objDatabase.GetStoredProcCommand("dbo.spCSI_Insonsistencias_MostrarDetallePorCodCasuistica");
+                        objDatabase.AddInParameter(cmd, "@piCodCasuistica", DbType.Int32, Cas.iCodCasuistica);
+                        objDatabase.ExecuteNonQuery(cmd);
+                        using (System.Data.IDataReader dr = objDatabase.ExecuteReader(cmd))
+                        {
+                            DataTable dtSchema = dr.GetSchemaTable();
+                            if (dtSchema != null)
+                            {
+                                foreach (DataRow drow in dtSchema.Rows)
+                                {
+                                    string columnName = System.Convert.ToString(drow["ColumnName"]);
+                                    DataColumn column = new DataColumn(columnName, (Type)(drow["DataType"]));
+                                    column.Unique = (bool)drow["IsUnique"];
+                                    column.AllowDBNull = (bool)drow["AllowDBNull"];
+                                    column.AutoIncrement = (bool)drow["IsAutoIncrement"];
+                                    listCols.Add(column);
+                                    dt.Columns.Add(column);
+                                }
+                            }
+                            while (dr.Read())
+                            {
+                                DataRow dataRow = dt.NewRow();
+                                for (int i = 0; i < listCols.Count; i++)
+                                {
+                                    dataRow[((DataColumn)listCols[i])] = dr[i];
+                                    //string a;
+                                    //a = listCols[i].Caption;
+                                }
+                                dt.Rows.Add(dataRow);
+
+                            }
+
+                            //dt1.Rows.Add(dr);
+                            //foreach (DataRow dRw in dt.Rows)
+                            //{
+                              
+                            //   // obj.Add(dRw);
+                            //    dt1.Rows.Add(dRw);
+                            //    //DataTable tbl1 = dRw.Table;
+
+                            //}
+                            
+                            //var result = ((IEnumerable)obj).Cast<object>().ToList();
+                            //dtCustomers.Load(dr);
+                            //objLst.Add(dtCustomers);
+
+
+                        }
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            return dt;
+
+        }
+
+
+IDATOS
+        DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica objFiltro); 
+
+
+
+

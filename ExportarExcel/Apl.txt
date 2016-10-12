@@ -1,0 +1,30 @@
+        private const string KSTR_DEVOLVER_DATOS_INCONSISTENCIA_FILTROCASUISTICA = "/Insonsistencias_MostrarDetallePorCodCasuistica";
+
+
+
+        public DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica objFiltro)
+         {
+             DataTable lst = new DataTable(); 
+
+             try
+             {
+                 string rutaServicioRest = ConfigurationManager.AppSettings["ServicioRest"] + KSTR_DEVOLVER_DATOS_INCONSISTENCIA_FILTROCASUISTICA;
+                 string tipoMetodoServicio = Html.KSTR_SERVICIO_POST;
+
+
+                 lst = RESTful.ConectarServicioEntidad<DataTable, FiltroCasuistica>(objFiltro, rutaServicioRest, tipoMetodoServicio);
+
+                 return lst;
+             }
+             catch (WebException e)
+             {
+                 Excepcion excepcion = new Excepcion();
+                 excepcion = ExcepcionWeb.ProcesarExcepcion(e);
+
+                 throw new Exception(excepcion.Identificador + ": " + excepcion.Description);
+             }
+             catch
+             {
+                 throw;
+             }
+         }
