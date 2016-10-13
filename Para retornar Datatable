@@ -1,0 +1,36 @@
+       public DataTable Insonsistencias_MostrarDetallePorCodCasuistica(FiltroCasuistica Cas)
+        {
+            var objDatabase = DatabaseFactory.CrearDatabase(KSTR_NOMBRE_DB_MCSI, KSTR_NOMBRE_DB_MCSI);
+            DbCommand cmd;
+            DataTable dt = new DataTable("Datos");
+            try
+            {
+                using (DbConnection con = objDatabase.CreateConnection())
+                {
+                    con.Open();
+                    try
+                    {                  
+                        cmd = objDatabase.GetStoredProcCommand("dbo.spCSI_Insonsistencias_MostrarDetallePorCodCasuistica");
+                        objDatabase.AddInParameter(cmd, "@piCodCasuistica", DbType.Int32, Cas.iCodCasuistica);
+                        objDatabase.ExecuteNonQuery(cmd);
+                        using (System.Data.IDataReader dr = objDatabase.ExecuteReader(cmd))
+                        dt.Load(dr);                                           
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            return dt;
+
+        }
