@@ -1,1 +1,4 @@
 
+DECLARE @valores VARCHAR(1000)
+SELECT @valores= COALESCE(@valores + ', ', '') + substring(vApePat,1,1)+vApeMat+'@SAT.GOB.PE'  FROM BDEOSCH..SGMaeUsu
+select @valores as valores
